@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  nwaf-dyn:
+    image: nemesida/nwaf-dyn-ce
+    platform: linux/amd64
+    container_name: nwaf-dyn
+    ports:
+      - 80:80
+      - 5672:5672
+    volumes:
+      - ./waf-config:/nginx.configs
+
+  nwaf-web:
+    image: nemesida/nwaf-web
+    platform: linux/amd64
+    container_name: nwaf-web
+    ports:
+      - 8080:8080
+      - 8090:80
+    volumes:
+      - ./api-cab-config:/nwaf-api
+      - ./api-cab-base:/var/lib/postgresql
